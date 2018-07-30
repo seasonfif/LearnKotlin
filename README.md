@@ -1,9 +1,9 @@
 # LearnKotlin
 LearnKotlin
 
-### 基础语法
+### 1 基础语法
 
-##### 函数定义
+##### 1.1 函数定义
 函数定义使用关键字 fun，参数格式为：参数 : 类型
 ```kotlin
 fun sum(a: Int, b: Int): Int {   // Int 参数，返回值 Int
@@ -29,12 +29,22 @@ public fun printSum(a: Int, b: Int) {
 }
 ```
 
-##### 可变长参数
-##### lambda表达式
-##### 变量与常量的定义
+##### 1.2 可变长参数
+```kotlin
+fun vars(vararg v: Int){
+    for(vt in v){
+        print(vt)
+    }
+}
+```
 
-### 类
-#### 类定义
+##### 1.3 lambda表达式
+
+
+##### 1.4 变量与常量的定义
+
+### 2 类
+#### 2.1 类定义
 ```kotlin
 class KotlinClass{
 
@@ -57,7 +67,7 @@ public     // 所有调用的地方都可见
 internal   // 同一个模块中可见
 ```
 
-#### 构造函数
+#### 2.2 构造函数
 构造函数有主次之分
 主构造器中不能包含任何代码，初始化代码可以放在初始化代码段中，初始化代码段使用 init 关键字作为前缀
 ```kotlin
@@ -72,21 +82,70 @@ open class KotlinClass(a: Int){
 ```
 主构造器的参数可以在初始化代码段中使用
 次级构造函数，需要加前缀constructor
-如果类有主构造函数，每个次构造函数都要直接或间接代理主构造函数
+
 ```kotlin
 //次级构造函数
 constructor(a: Int, b: Int) : this(a){
     sum(a, b)
 }
 ```
+如果类有主构造函数，每个次构造函数都要直接或间接代理主构造函数
 
-#### 属性
+#### 2.3 属性
 
-### 继承
-如果一个类要被继承，可以使用 open 关键字进行修饰
+### 3 继承
+#### 3.1 类继承
+如果一个类要被继承，必须使用 open 关键字进行修饰
 ```kotlin
-open class Base(p: Int)           //基类
+open class Base(a: Int)         //基类
 
-class Derived(p: Int) : Base(p)
+class Child(a: Int) : Base(a)   //子类
 ```
+
+子类有主构造函数
+```kotlin
+open class KotlinClass(a: Int){  //基类
+
+}
+
+class KotlinChildClass(a: Int) : KotlinClass(a) {   //子类有主构造函数
+
+}
+```
+
+子类没有主构造函数
+```kotlin
+open class KotlinClass(a: Int){  //基类
+
+}
+
+class KotlinChildClass1 : KotlinClass {   //子类没有主构造函数
+
+    //子类没有主构造函数，则在每一个次级构造函数中用 super 关键字初始化基类，或者代理另一个构造函数
+    constructor(a: Int): super(a){
+
+    }
+    
+    constructor(a: Int, b: Int): this(a){
+    
+    }
+}
+```
+
+#### 3.2 方法重写
+父类使用fun声明的函数默认为final，不能被子类重写。
+如果子类要重写该函数，必须使用open修饰, 子类重写必须使用 override
+```kotlin
+//默认所有方法都是final
+//如要重写必须使用open修饰
+open fun sum(a: Int, b: Int): Int {
+    return a + b
+}
+    
+//子类重写必须使用 override
+override fun sum(a: Int, b: Int): Int {
+    return 2
+}    
+```
+
 

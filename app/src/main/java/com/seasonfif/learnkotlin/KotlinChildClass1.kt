@@ -1,4 +1,4 @@
-package seasonfif.com.learnkotlin
+package com.seasonfif.learnkotlin
 
 class KotlinChildClass1 : KotlinClass {
 
