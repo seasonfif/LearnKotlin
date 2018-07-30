@@ -38,10 +38,114 @@ fun vars(vararg v: Int){
 }
 ```
 
-##### 1.3 lambda表达式
+##### 1.3 高阶函数与lambda表达式
+以一个函数作为参数，或者返回值是函数的函数称为 高阶函数
+```kotlin
+1、无参数的函数作为函数入参
+定义函数
+fun action(body:()->Unit){
+        body()
+}
+调用方法1
+var l : ()->Unit = {
+    println("hello")
+}
+action(l)
 
+调用方法2
+action({
+    println("hello")
+})
 
-##### 1.4 变量与常量的定义
+调用方法3
+action{
+   println("hello")
+}
+
+2、带参数和返回值得函数 作为形参
+定义函数
+fun action(a: Int, body:(Int, Int)->Int){
+    body(3, 3)
+}
+
+调用方法1
+var n : (Int, Int)->Int = {
+    i, j ->
+    i + j
+}
+action1(1, n)
+
+调用方法2
+action1(1, {
+    i, j ->
+    i + j
+})
+
+调用方法3
+action1(1){
+    i, j ->
+    i + j
+}
+```
+
+##### 1.5 默认参数
+```kotlin
+函数定义
+fun defaultParam(a: Int, b: Int = 1, c: Int = 1){
+    println("defaultParam:" + (a+b+c))
+}
+
+调用方法
+defaultParam(1)
+defaultParam(1, c=2)
+defaultParam(1, b=2)
+defaultParam(1, a=2, b=2)
+```
+
+##### 1.6 包级函数
+定义在包级别的函数，不属于某个具体的类
+同一个包中可直接调用
+不同的包需要import导入
+
+##### 1.7 局部函数
+```kotlin
+fun actionLocal(a: Int) {
+    var x = 3
+    fun localFun(a: Int) {
+        println("localFun:$a")
+    }
+
+    localFun(a+x)
+}
+```
+
+##### 1.8 变量与常量的定义
+```kotlin
+可变变量定义：var 关键字
+不可变变量定义：val 关键字，只能赋值一次的变量
+
+变量在定义时必须被初始化
+
+延迟初始化：lateinit
+```
+
+##### 1.9 null检查机制
+```kotlin
+1、变量检查
+//类型后面加?表示可为空
+var age: String? = "3" 
+//抛出空指针异常
+val ages = age!!.toInt()
+//不做处理返回 null
+val ages1 = age?.toInt()
+//age为空返回-1
+val ages2 = age?.toInt() ?: -1
+
+2、方法检查
+fun parseInt(str: String?): Int? {
+  // ...
+}
+```
 
 ### 2 类
 #### 2.1 类定义
@@ -90,8 +194,6 @@ constructor(a: Int, b: Int) : this(a){
 }
 ```
 如果类有主构造函数，每个次构造函数都要直接或间接代理主构造函数
-
-#### 2.3 属性
 
 ### 3 继承
 #### 3.1 类继承
@@ -147,5 +249,22 @@ override fun sum(a: Int, b: Int): Int {
     return 2
 }    
 ```
+
+### 4 接口
+1、接口可以有已实现的方法
+
+2、多接口重复函数重写
+
+### 5 扩展
+```kotlin
+对一个类的属性和方法进行扩展，且不需要继承或使用 Decorator 模式
+
+若扩展函数和成员函数一致，则使用该函数时，会优先使用成员函数。
+```
+
+### 6 伴生
+
+伴生对象类似于static
+
 
 

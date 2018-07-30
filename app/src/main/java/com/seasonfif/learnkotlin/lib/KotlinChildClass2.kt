@@ -1,4 +1,7 @@
-package com.seasonfif.learnkotlin
+package com.seasonfif.learnkotlin.lib
+
+import com.seasonfif.learnkotlin.KotlinClass
+import com.seasonfif.learnkotlin.topFun
 
 class KotlinChildClass1 : KotlinClass {
 

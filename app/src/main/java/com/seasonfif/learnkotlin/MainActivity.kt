@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         tv = findViewById(R.id.tv)
+        btn = findViewById(R.id.btn)
 
         if ( tv != null){
 

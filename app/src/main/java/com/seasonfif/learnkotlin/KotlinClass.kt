@@ -1,13 +1,23 @@
 package com.seasonfif.learnkotlin
 
+fun topFun(a: Int, b: Int){
+    println("topFun:" + (a+b))
+}
+
 //默认所有类都是final
 //如要派生子类必须使用open修饰
 open class KotlinClass(a: Int){
+
+    var x : Int = 1
+    val y : Int = 1
+
+    lateinit var str: String
 
     //初始化代码段
     //可直接使用主构造器参数
     init {
         echo(a)
+        x++
     }
 
     /*constructor(a: Int){
@@ -24,6 +34,8 @@ open class KotlinClass(a: Int){
     }
 
     fun echo(a: Int){
+        str = ""
+        str.length
         a
     }
 
@@ -87,16 +99,19 @@ open class KotlinClass(a: Int){
         fun call()
     }
 
+    fun action(body:()->Unit){
+        body()
+    }
 
     //lambda 函数作为参数
     //不带参数且没有返回值
     fun action(a: Int, body:()->Unit){
-        var str = body()
+        body()
     }
 
     //带参数且有返回值
     fun action1(a: Int, body:(Int, Int)->Int){
-        var str = body(3, 3)
+        body(3, 3)
     }
 
     //带参数且有返回值
@@ -107,10 +122,62 @@ open class KotlinClass(a: Int){
     //函数作为返回值
     val action3: (Int, Int)->Int = {x,y -> x+y}
 
+    fun defaultParam(a: Int, b: Int = 1, c: Int = 1){
+        println("defaultParam:" + (a+b+c))
+    }
+
+    fun actionLocal(a: Int) {
+        var x = 3
+        fun localFun(a: Int?) {
+            println("localFun:$a")
+        }
+
+        localFun(a + x)
+    }
+
+    fun parseInt(str: String?): Int?{
+        if (str == null) return null
+        return str.toInt()
+    }
 
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
+
+            //无参函数作为形参
+            var l : ()->Unit = {
+                println("hello")
+            }
+
+            KotlinClass(1).action({
+                println("hello")
+            })
+
+            KotlinClass(1).action{
+                println("hello")
+            }
+
+            KotlinClass(1).action(l)
+
+            //有参有返回值函数作为形参
+
+            var n : (Int, Int)->Int = {
+                i, j ->
+                i + j
+            }
+            KotlinClass(1).action1(1, n)
+
+            KotlinClass(1).action1(1, {
+                i, j ->
+                i + j
+            })
+
+            KotlinClass(1).action1(1){
+                i, j ->
+                i + j
+            }
+
+
             //lambda 闭包作为形参
             KotlinClass(1).action(1, {
                 println("aaaaaaa")
@@ -126,7 +193,6 @@ open class KotlinClass(a: Int){
                 println("ccccccc")
             }
             KotlinClass(1).action(1, m)
-
 
             KotlinClass(1).action1(1, {
                 a,b ->
@@ -145,6 +211,26 @@ open class KotlinClass(a: Int){
 
             println(KotlinClass(1).action3(1,1))
 
+            KotlinClass(1).defaultParam(2)
+            KotlinClass(1).defaultParam(a = 2,c = 3)
+
+            KotlinClass(1).actionLocal(2)
+
+            //类型后面加?表示可为空
+            var age: String? = null
+            //抛出空指针异常
+//            val ages = age!!.toInt()
+//            println(ages)
+            //不做处理返回 null
+            val ages1 = age?.toInt()
+            println(ages1)
+            //age为空返回-1
+            val ages2 = age?.toInt() ?: -1
+            println(ages2)
+
+
+            println(KotlinClass(1).parseInt("2"))
+            println(KotlinClass(1).parseInt(null))
         }
     }
 }
