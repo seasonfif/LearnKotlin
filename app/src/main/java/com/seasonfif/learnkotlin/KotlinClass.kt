@@ -12,6 +12,9 @@ open class KotlinClass(a: Int){
     val y : Int = 1
 
     lateinit var str: String
+    val str1: String by lazy {
+        "hello"
+    }
 
     //初始化代码段
     //可直接使用主构造器参数

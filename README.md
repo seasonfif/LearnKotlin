@@ -1,5 +1,4 @@
 # LearnKotlin
-LearnKotlin
 
 ### 1 基础语法
 
@@ -126,7 +125,12 @@ fun actionLocal(a: Int) {
 
 变量在定义时必须被初始化
 
-延迟初始化：lateinit
+延迟初始化：lateinit 只能用于var
+lateinit var str: String
+延迟初始化：lazy 只能用于val
+val str1: String by lazy { 
+    "hello"
+}
 ```
 
 ##### 1.9 null检查机制
@@ -147,7 +151,15 @@ fun parseInt(str: String?): Int? {
 }
 ```
 
-##### 1.10 区间
+##### 1.10 集合
+```kotlin
+val array= intArrayOf(1,2,3,4)
+val set= setOf<Int>(1,2,3,4)
+val list= listOf<Int>(1,2,3,4)
+val map= mapOf<Int, String>(1 to "a", 2 to "b", 3 to "c", 4 to "d", 5 to "e")
+```
+
+##### 1.11 区间
 in 运算符来检测某个数字是否在指定区间内，区间格式为 x..y
 ```kotlin
 in 用于判断语句
@@ -173,6 +185,14 @@ fun rangeLoop(){
 step 增长步长
 downTo 递减
 ```
+##### 1.12 控制语句
+```kotlin
+if...else...
+while
+do...while
+when
+```
+
 
 ### 2 类
 #### 2.1 类定义
@@ -290,8 +310,16 @@ override fun sum(a: Int, b: Int): Int {
 ```
 
 ### 6 伴生
-
 伴生对象类似于static
+
+### 7 委托
+Kotlin 通过关键字 by 实现委托
+类委托
+
+属性委托
+Lazy 第一次调用 get() 会执行
+Observable
+
 
 
 
