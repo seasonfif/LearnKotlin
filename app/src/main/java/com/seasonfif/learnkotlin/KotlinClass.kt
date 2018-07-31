@@ -140,6 +140,32 @@ open class KotlinClass(a: Int){
         return str.toInt()
     }
 
+    fun rangeTest(){
+        val x = 5
+        val y = 9
+        if (x in 1..8) {
+            println("x 在区间内")
+        }
+
+        if (y  !in 1..8) {
+            println("y 不在区间内")
+        }
+    }
+
+    fun rangeLoop(){
+        for (x in 1..9) {
+            println("$x")
+        }
+
+        for (x in 1..9 step 2) {
+            println("$x")
+        }
+
+        for (x in 9 downTo 1) {
+            println("$x")
+        }
+    }
+
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
@@ -231,6 +257,9 @@ open class KotlinClass(a: Int){
 
             println(KotlinClass(1).parseInt("2"))
             println(KotlinClass(1).parseInt(null))
+
+            KotlinClass(1).rangeTest()
+            KotlinClass(1).rangeLoop()
         }
     }
 }

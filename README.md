@@ -147,6 +147,33 @@ fun parseInt(str: String?): Int? {
 }
 ```
 
+##### 1.10 区间
+in 运算符来检测某个数字是否在指定区间内，区间格式为 x..y
+```kotlin
+in 用于判断语句
+fun rangeTest(){
+    val x = 5
+    val y = 9
+    if (x in 1..8) {
+        println("x 在区间内")
+    }
+
+    if (y  !in 1..8) {
+        println("y 不在区间内")
+    }
+}
+
+in 用于循环语句
+fun rangeLoop(){
+    for (x in 1..8) {
+        println("$x")
+    }
+}
+
+step 增长步长
+downTo 递减
+```
+
 ### 2 类
 #### 2.1 类定义
 ```kotlin
