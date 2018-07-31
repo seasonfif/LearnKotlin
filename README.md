@@ -309,10 +309,13 @@ override fun sum(a: Int, b: Int): Int {
 若扩展函数和成员函数一致，则使用该函数时，会优先使用成员函数。
 ```
 
-### 6 伴生
+### 6 伴生 companion object
 伴生对象类似于static
 
-### 7 委托
+### 7 单例 object
+object对象类似于单例
+
+### 8 委托
 Kotlin 通过关键字 by 实现委托
 类委托
 
