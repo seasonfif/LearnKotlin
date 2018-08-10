@@ -12,6 +12,7 @@ open class KotlinClass(a: Int){
     val y : Int = 1
 
     lateinit var str: String
+
     val str1: String by lazy {
         "hello"
     }
@@ -40,6 +41,10 @@ open class KotlinClass(a: Int){
         str = ""
         str.length
         a
+    }
+
+    fun topFun(a: Int, b: Int){
+        println("topFun class:" + (a+b))
     }
 
     //默认所有方法都是final
@@ -103,6 +108,7 @@ open class KotlinClass(a: Int){
     }
 
     fun action(body:()->Unit){
+        topFun(1,2)
         body()
     }
 
@@ -139,8 +145,8 @@ open class KotlinClass(a: Int){
     }
 
     fun parseInt(str: String?): Int?{
-        if (str == null) return null
-        return str.toInt()
+//        if (str == null) return null
+        return str?.toInt()
     }
 
     fun rangeTest(){
@@ -164,8 +170,8 @@ open class KotlinClass(a: Int){
             println("$x")
         }
 
-        for (x in 9 downTo 1) {
-            println("$x")
+        for (x in 9 downTo 3) {
+            println("aaaaaaa$x")
         }
     }
 

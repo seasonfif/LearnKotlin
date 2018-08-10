@@ -7,8 +7,8 @@ class Impl : IA, IB{
     }
 
     override fun foo() {
-        super<IA>.foo()
-        super<IB>.foo()
+//        super<IA>.foo()
+//        super<IB>.foo()
         println("impl foo")
     }
 
@@ -34,6 +34,12 @@ fun main(args: Array<String>) {
     println(Impl.IMPL)
     Impl.copy()
     S.paste()
+}
+
+fun Impl.aaaa(a:Int, b:Int): String{
+    this.test()
+    println("扩展的test $a $b")
+    return "返回值"
 }
 
 fun Impl.extends(a:Int, b:Int): String{
