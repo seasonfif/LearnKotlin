@@ -9,6 +9,16 @@ kotlin协程的三种启动方式
 3.async/await:Deferred
 */
 
+/**
+ * 协程使用的4种CoroutineDispatcher
+ * Unconfined      的含义是不给协程指定运行的线程, 逮到谁就使用谁, 启动它的线程直接执行它, 但被挂起后,
+ *                 会由恢复它的线程继续执行, 如果一个协程会被挂起多次, 那么每次被恢复后, 都可能被不同线程继续执行.
+ * CommonPool      协程内部创建一个线程池执行任务
+ * HandlerContext  用android的handler处理你的代码块，构造方法需要提供Handler
+ * UI              使用mainlooper初始化的HandlerContext
+ *                 UI = HandlerContext(Handler(Looper.getMainLooper()), "UI")
+ */
+
 fun main(args: Array<String>) {
 //    testRunBlocking()
 
