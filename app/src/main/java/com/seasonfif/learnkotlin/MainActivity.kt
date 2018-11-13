@@ -1,8 +1,11 @@
 package com.seasonfif.learnkotlin
 
-import android.support.v7.app.AppCompatActivity
+import android.content.Context
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
+import android.view.KeyEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.TextView
 
@@ -10,6 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     private var tv: TextView ?= null
     lateinit var btn: Button
+    lateinit var et: KtEditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,6 +21,11 @@ class MainActivity : AppCompatActivity() {
 
         tv = findViewById(R.id.tv)
         btn = findViewById(R.id.btn)
+        et = findViewById(R.id.et)
+
+        et.isFocusable = true
+        et.isFocusableInTouchMode = true
+        et.requestFocus()
 
         if ( tv != null){
 
@@ -38,11 +47,11 @@ class MainActivity : AppCompatActivity() {
 
 
         tv?.setOnClickListener {
-            it.tag = KotlinClass(1).action(1,{
+            it.tag = KotlinClass(1).action(1){
                 tv?.let {
                     it.text = "aaaaaaaa"
                 }
-            })
+            }
         }
     }
 }
