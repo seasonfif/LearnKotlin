@@ -1,6 +1,6 @@
 package com.seasonfif.learnkotlin.coroutine
 
-import kotlinx.coroutines.experimental.*
+import kotlinx.coroutines.*
 
 /**
 kotlin协程的三种启动方式
@@ -30,9 +30,11 @@ fun main(args: Array<String>) {
 
 //    testAsync()
 
-    testLightThread()
+//    testLightThread()
 
 //    testSync()
+
+    testWithContext()
 }
 
 
@@ -51,21 +53,22 @@ fun testRunBlocking(){
 
 fun testLaunch(){
 //  launch启动的协程任务是不会阻塞线程的
-    var job = launch(CommonPool) {
+    var job = GlobalScope.launch{
         delay(3000)
         println("协程所在线程-${Thread.currentThread().name}")
     }
 
-    job.cancel()
-    /*runBlocking {
-        job.join()
-    }*/
-    Thread.sleep(5000)
+//    job.cancel()
     println("主线程执行完毕")
+    runBlocking {
+        //join方法会阻塞主线程，直到协程执行结束
+        job.join()
+    }
+//    Thread.sleep(5000)
 }
 
 fun testCancel(){
-    val job = launch(Unconfined){
+    val job = GlobalScope.launch{
         var i = 0
         while (true){
             i++
@@ -90,7 +93,7 @@ fun testCancel(){
 
 fun testLaunchDelay(){
 //    延迟一个协程
-    val job = launch(Unconfined, CoroutineStart.LAZY){
+    val job = GlobalScope.launch(start=CoroutineStart.LAZY){
         delay(1000)
         println("协程-LAZY")
     }
@@ -106,7 +109,7 @@ fun testAsync(){
 //  本身不阻塞，使用await获取结果时会阻塞以等待协程的执行结果
     runBlocking {
 
-        var job = async(CommonPool){
+        var job = async(Dispatchers.Unconfined){
             doAny()
         }
 
@@ -126,7 +129,7 @@ fun testLightThread() = runBlocking{
 
     var jobs = List(10000){
 
-        async (Unconfined) {
+        async (Dispatchers.Unconfined) {
             delay(1500)
             tset.add(Thread.currentThread().name)
             if (it%2000 == 0){
@@ -144,15 +147,35 @@ fun testLightThread() = runBlocking{
 
 fun testSync() = runBlocking {
 
-    val job1 = async(CommonPool){
+    val job1 = async(Dispatchers.Default){
         delay(3000)
         "job1"
     }
 
-    val job2 = async(CommonPool){
+    val job2 = async(Dispatchers.Default){
         delay(4000)
         "job2"
     }
 
     println(job1.await() + job2.await())
+}
+
+fun testWithContext() {
+
+    GlobalScope.launch {
+        println("1: ${Thread.currentThread().name}")
+        coroutineScope{
+            println("2: ${Thread.currentThread().name}")
+            withContext(Dispatchers.Default){
+                println("3: ${Thread.currentThread().name}")
+            }
+        }
+
+        println("4: ${Thread.currentThread().name}")
+
+    }
+    println("5: ${Thread.currentThread().name}")
+    runBlocking {
+        delay(2000)
+    }
 }
